@@ -1,0 +1,216 @@
+bounds: &world
+  - -180
+  - -85.05112877980659
+  - 180
+  - 85.05112877980659
+center:
+  - 3.4018
+  - 47.8511
+  - 18
+format: png8
+interactivity: false
+minzoom: 6
+maxzoom: 20
+
+scale: 1
+metatile: 8
+name: bdtopo-cartocss
+description: ''
+attribution: 'Data IGN/BDTopo 2022-01 (Lic. Ouverte)'
+
+# Various parts to be included later on
+_parts:
+  extents: &extents
+    extent: *world
+    srs-name: "3857"
+    srs: "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+  extents84: &extents84
+    extent: *world
+    srs-name: "WGS84"
+    srs: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  db: &db
+    type: "postgis"
+    dbname: "osm"
+    host: "localhost"
+    user: "bdtopo"
+    password: m4d31nfr4nc3
+    geometry_field: geometrie
+    extent: "-20037508,-20037508,20037508,20037508"
+    srid: 3857
+    asynchronous_request: true
+    max_async_connection: 4
+    max_size: 200
+
+Stylesheet:
+  - style.mss
+  - transport.mss
+  - services_et_activites.mss
+  - bati.mss
+
+Layer:
+  # Surfacique
+  - id: zone_d_activite_ou_d_interet
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            categorie,
+            nature,
+            nature_detaillee,
+            toponyme
+          FROM
+            bdtopo_zone_d_activite_ou_d_interet
+          WHERE
+            etat_de_l_objet = 'En service'
+          ORDER BY importance, ST_Area(geometrie) DESC
+        ) as zone_d_activite_ou_d_interet
+
+  - id: cimetiere
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            nature
+          FROM
+            bdtopo_cimetiere
+          WHERE
+            etat_de_l_objet = 'En service'
+        ) as cimetiere
+
+  # Linéaire
+  - id: troncon_de_voie_ferree
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            cpx_toponyme,
+            nombre_de_voies,
+            electrifie
+          FROM
+            bdtopo_troncon_de_voie_ferree
+          WHERE
+            etat_de_l_objet = 'En service'
+        ) as troncon_de_voie_ferree
+
+  - id: troncon_de_route
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            r.geometrie,
+            r.nature,
+            r.prive,
+            r.nom_1_gauche as nom,
+            r.cpx_numero,
+            7-r.importance::int as width,
+            r.importance,
+            min(r2.importance) as max
+          FROM
+            bdtopo_troncon_de_route r
+          LEFT JOIN
+            bdtopo_troncon_de_route r2
+          ON (ST_dwithin(r.geometrie, r2.geometrie, 0.001) and r.nom_1_gauche=r2.nom_1_gauche and r.importance > r2.importance)
+          WHERE
+            r.etat_de_l_objet = 'En service'
+          GROUP BY 1,2,3,4,5,6,7
+        ) as troncon_de_route
+
+  # Ponctuel
+  - id: toponymie_transport
+    status: off
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            graphie
+          FROM
+            bdtopo_toponymie_transport
+          ORDER BY importance
+        ) as toponymie_transport
+
+
+  - id: point_du_reseau
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            nature
+          FROM
+            bdtopo_point_du_reseau
+          WHERE
+            etat_de_l_objet = 'En service'
+        ) as point_du_reseau
+
+  - id: point_de_repere
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            route,
+            numero
+          FROM
+            bdtopo_point_de_repere
+        ) as point_de_repere
+
+  - id: non_communication
+    status: off
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie
+          FROM
+            bdtopo_non_communication
+        ) as non_communication
+
+  - id: toponymie_services_et_activites
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            nature_de_l_objet,
+            graphie_du_toponyme
+          FROM
+            bdtopo_toponymie_services_et_activites
+        ) as toponymie_services_et_activites
+
+  - id: construction_ponctuelle
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            geometrie,
+            coalesce(nature_detaillee, nature) as nature,
+            toponyme
+          FROM
+            bdtopo_construction_ponctuelle
+          WHERE
+            etat_de_l_objet = 'En service'
+        ) as construction_ponctuelle
