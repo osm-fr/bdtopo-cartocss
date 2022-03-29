@@ -126,6 +126,25 @@ Layer:
           GROUP BY 1,2,3,4,5,6,7
         ) as troncon_de_route
 
+
+  - id: voie_nommee
+    <<: *extents84
+    Datasource:
+      <<: *db
+      table: >-
+        (
+          SELECT
+            r.geometrie,
+            regexp_replace(regexp_replace(regexp_replace(initcap(nom_minuscule),E' L(e |a |es |\x27)',' l\1','g'),E' D(e |u |es |\x27)',' d\1','g'),' A(|u|ux) ',' a\1 ','g') as nom,
+            r.qualite_passage_maj_min as qualite,
+            r.id_pseudo_fpb
+          FROM
+            bdtopo_voie_nommee r
+          WHERE
+            r.validite
+        ) as troncon_de_route
+
+
   # Ponctuel
   - id: toponymie_transport
     status: off

@@ -1,6 +1,7 @@
 #troncon_de_route { 
     line-width: [width];
     line-color: magenta;
+    ref/text-clip: true;
     ref/text-name: [cpx_numero];
     ref/text-size: 9;
     ref/text-fill: magenta;
@@ -8,6 +9,7 @@
     ref/text-halo-radius: 1;
     ref/text-placement: line;
     ref/text-dy: -4;
+    name/text-clip: true;
     name/text-name: "[nom]";
     name/text-size: 11;
     name/text-fill: magenta;
@@ -24,6 +26,21 @@
     }
     [prive=true] {
         line-dasharray: 4,6;
+    }
+}
+
+#voie_nommee {
+    name/text-clip: true;
+    name/text-name: "[nom]";
+    name/text-size: 12;
+    name/text-fill: magenta;
+    name/text-dy: 16;
+    name/text-face-name: @book-fonts;
+    name/text-halo-radius: 1;
+    name/text-placement: line;
+    [qualite != 'OK'] {
+        name/text-face-name: @oblique-fonts;
+        name/text-name: "¿¿ "+[nom]+" ??";
     }
 }
 
