@@ -11,7 +11,7 @@
     ref/text-dy: -4;
     name/text-clip: true;
     name/text-name: "[nom]";
-    name/text-size: 11;
+    name/text-size: 10;
     name/text-fill: magenta;
     name/text-dy: 4;
     name/text-face-name: @book-fonts;
@@ -43,7 +43,7 @@
 #voie_nommee {
     name/text-clip: true;
     name/text-name: "[nom]";
-    name/text-size: 12;
+    name/text-size: 11;
     name/text-fill: magenta;
     name/text-dy: 16;
     name/text-face-name: @book-fonts;
@@ -53,11 +53,14 @@
         name/text-face-name: @oblique-fonts;
         name/text-name: "¿¿ "+[nom]+" ??";
     }
+    [zoom > 18] {
+        name/text-size: 13;
+    }
 }
 
 #point_du_reseau { 
     name/text-name: "[nature]";
-    name/text-size: 8;
+    name/text-size: 10;
     name/text-fill: black;
     name/text-dy: -6;
     name/text-face-name: @book-fonts;
@@ -68,7 +71,7 @@
 
 #point_de_repere { 
     name/text-name: "PR+[numero]";
-    name/text-size: 10;
+    name/text-size: 12;
     name/text-fill: magenta;
     name/text-dy: -8;
     name/text-face-name: @bold-fonts;
@@ -84,13 +87,16 @@
 
 #toponymie_transport { 
     name/text-name: "[graphie]";
-    name/text-size: 8;
+    name/text-size: 10;
     name/text-fill: black;
     name/text-dy: -6;
     name/text-face-name: @book-fonts;
     name/text-halo-radius: 1;
     name/text-wrap-width: 30;
     marker-width: 3;
+    [zoom > 18] {
+        name/text-size: 12;
+    }
 }
 
 
@@ -104,4 +110,7 @@
     name/text-face-name: @book-fonts;
     name/text-halo-radius: 1;
     name/text-placement: line;
+    [zoom > 18] {
+        name/text-size: 12;
+    }
 }

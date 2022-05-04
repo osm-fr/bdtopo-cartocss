@@ -3,8 +3,11 @@
     polygon-opacity: 0.5;
     text-name: "Cimetière "+[nature];
     text-face-name: @book-fonts;
-    text-size: 10;
+    text-size: 12;
     text-wrap-width: 30;
+    [zoom > 18] {
+        text-size: 12;
+    }
 }
 
 #construction_ponctuelle {
@@ -19,4 +22,8 @@
     name/text-wrap-width: 30;
     name/text-dy: 4;
     marker-width: 3;
+    [zoom > 18] {
+        text-size: 12;
+        name/text-size: 12;
+    }
 }

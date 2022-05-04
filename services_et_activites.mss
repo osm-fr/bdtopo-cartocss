@@ -15,6 +15,11 @@
     text-face-name: @book-fonts;
     text-halo-radius: 1;
     text-wrap-width: 80;
+    [zoom > 18] {
+        text-size: 12;
+        name/text-size: 12;
+    }
+
 }
 
 
@@ -33,4 +38,9 @@
     text-face-name: @book-fonts;
     text-halo-radius: 1;
     marker-width: 3;
+    [zoom > 18] {
+        text-size: 12;
+        name/text-size: 12;
+    }
+
 }
