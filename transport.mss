@@ -27,6 +27,17 @@
     [prive=true] {
         line-dasharray: 4,6;
     }
+    [sens_de_circulation='Sens direct'],
+    [sens_de_circulation='Sens inverse'] {
+        marker-transform: "scale(1.7)";
+        marker-placement: line;
+        marker-spacing: 128;
+        marker-fill: magenta;
+        marker-file: url('symbols/oneway.svg');
+        [sens_de_circulation='Sens inverse'] {
+            marker-file: url('symbols/oneway-reverse.svg');
+        }
+    }
 }
 
 #voie_nommee {
