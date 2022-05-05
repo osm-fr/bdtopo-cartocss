@@ -1,6 +1,6 @@
 #cimetiere {
     polygon-fill: grey;
-    polygon-opacity: 0.5;
+    polygon-opacity: 0.4;
     text-name: "Cimetière "+[nature];
     text-face-name: @book-fonts;
     text-size: 12;

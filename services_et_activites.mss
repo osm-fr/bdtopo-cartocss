@@ -1,6 +1,6 @@
 #zone_d_activite_ou_d_interet {
     polygon-fill: blue;
-    polygon-opacity: 0.25;
+    polygon-opacity: 0.2;
     name/text-name: [toponyme];
     name/text-size: 10;
     name/text-fill: blue;
