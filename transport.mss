@@ -1,6 +1,7 @@
 #troncon_de_route { 
     line-width: [width];
     line-color: magenta;
+    [nature='Rond-point'],
     [sens_de_circulation='Sens direct'],
     [sens_de_circulation='Sens inverse'] {
         marker-transform: "scale(2)";
