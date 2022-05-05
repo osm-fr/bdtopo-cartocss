@@ -67,7 +67,7 @@
     name/text-face-name: @book-fonts;
     name/text-halo-radius: 1;
     name/text-wrap-width: 30;
-    marker-width: 3;
+    marker-width: 4;
 }
 
 #point_de_repere { 
@@ -82,7 +82,7 @@
 }
 
 #non_communication { 
-    marker-width: 5;
+    marker-width: 6;
     marker-fill: black;
 }
 
