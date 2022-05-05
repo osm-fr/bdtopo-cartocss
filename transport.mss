@@ -77,10 +77,10 @@
 #point_de_repere { 
     name/text-name: "PR+[numero]";
     name/text-size: 12;
-    name/text-fill: magenta;
+    name/text-fill: black;
     name/text-dy: -8;
     name/text-face-name: @bold-fonts;
-    name/text-halo-radius: 1;
+    name/text-halo-radius: 1.5;
     name/text-wrap-width: 30;
     marker-width: 3;
 }
