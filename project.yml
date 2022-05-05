@@ -116,6 +116,7 @@ Layer:
             7-r.importance::int as width,
             r.importance,
             r.sens_de_circulation,
+            r.fictif::text,
             min(r2.importance) as max
           FROM
             bdtopo_troncon_de_route r
@@ -124,7 +125,7 @@ Layer:
           ON (ST_dwithin(r.geometrie, r2.geometrie, 0.001) and r.nom_1_gauche=r2.nom_1_gauche and r.importance > r2.importance)
           WHERE
             r.etat_de_l_objet = 'En service'
-          GROUP BY 1,2,3,4,5,6,7,8
+          GROUP BY 1,2,3,4,5,6,7,8,9
         ) as troncon_de_route
 
 
