@@ -1,6 +1,18 @@
 #troncon_de_route { 
     line-width: [width];
     line-color: magenta;
+    [sens_de_circulation='Sens direct'],
+    [sens_de_circulation='Sens inverse'] {
+        marker-transform: "scale(2)";
+        marker-placement: line;
+        marker-ignore-placement: true;
+        marker-spacing: 128;
+        marker-fill: white;
+        marker-file: url('symbols/oneway.svg');
+        [sens_de_circulation='Sens inverse'] {
+            marker-file: url('symbols/oneway-reverse.svg');
+        }
+    }
     ref/text-clip: true;
     ref/text-name: [cpx_numero];
     ref/text-size: 9;
@@ -26,17 +38,6 @@
     }
     [prive=true] {
         line-dasharray: 4,6;
-    }
-    [sens_de_circulation='Sens direct'],
-    [sens_de_circulation='Sens inverse'] {
-        marker-transform: "scale(1.7)";
-        marker-placement: line;
-        marker-spacing: 128;
-        marker-fill: magenta;
-        marker-file: url('symbols/oneway.svg');
-        [sens_de_circulation='Sens inverse'] {
-            marker-file: url('symbols/oneway-reverse.svg');
-        }
     }
 }
 
